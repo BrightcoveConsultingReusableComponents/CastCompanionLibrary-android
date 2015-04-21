@@ -335,8 +335,7 @@ public class VideoCastControllerFragment extends Fragment implements OnVideoCast
     private void updateClosedCaptionState() {
         int state = VideoCastController.CC_HIDDEN;
         if (mCastManager.isFeatureEnabled(VideoCastManager.FEATURE_CAPTIONS_PREFERENCE)
-                && mSelectedMedia != null
-                && mCastManager.getTracksPreferenceManager().isCaptionEnabled()) {
+                && mSelectedMedia != null) {
             List<MediaTrack> tracks = mSelectedMedia.getMediaTracks();
             state = tracks == null || tracks.isEmpty() ? VideoCastController.CC_DISABLED
                     : VideoCastController.CC_ENABLED;
