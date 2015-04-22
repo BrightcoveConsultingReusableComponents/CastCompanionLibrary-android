@@ -41,6 +41,9 @@ import java.util.List;
  */
 public class TracksChooserDialog extends DialogFragment {
 
+    // TODO: make this a MaterialDialog like the one used in PlayerActivity
+    // this would be a met-specific enhancement. discard audiotracks.
+
     private VideoCastManager mCastManager;
     private long[] mActiveTracks = null;
     private MediaInfo mMediaInfo;

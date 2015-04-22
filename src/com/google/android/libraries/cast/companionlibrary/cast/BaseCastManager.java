@@ -257,7 +257,7 @@ public abstract class BaseCastManager
         }
         onDisconnected(stopAppOnExit, clearPersistedConnectionData, setDefaultRoute);
         onDeviceUnselected();
-        if (mApiClient != null) {
+        if (mApiClient != null && mApiClient.isConnected()) {
             LOGD(TAG, "Trying to disconnect");
             mApiClient.disconnect();
             if ((mMediaRouter != null) && setDefaultRoute) {
