@@ -73,6 +73,7 @@
                     android:layout_marginLeft="20dp"
                     android:layout_toRightOf="@+id/play_pause_toggle"
                     android:background="?attr/selectableItemBackgroundBorderless"
+                    android:visibility="gone"
                     android:src="@drawable/skip_next_button" />
 
                 <ImageButton
@@ -83,6 +84,7 @@
                     android:layout_marginRight="20dp"
                     android:layout_toLeftOf="@+id/play_pause_toggle"
                     android:background="?attr/selectableItemBackgroundBorderless"
+                    android:visibility="gone"
                     android:src="@drawable/skip_previous_button" />
 
                 <ImageButton
