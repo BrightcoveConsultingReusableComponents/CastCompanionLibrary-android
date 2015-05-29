@@ -32,12 +32,12 @@ repositories {
 }
 
 apply plugin: 'com.android.library'
+apply plugin: 'maven-publish'
 apply plugin: "com.jfrog.artifactory"
 
 android {
     compileSdkVersion 22
     buildToolsVersion "22.0.1"
-    publishNonDefault true
 
     defaultConfig {
         minSdkVersion 10
@@ -70,19 +70,22 @@ artifactory {
             maven = true
         }
         defaults {
-            publications ('mavenJava')
+            publications ('ccl')
         }
     }
 }
 
 publishing {
     publications {
-        mavenJava(MavenPublication) {
-            from components.java
+        ccl(MavenPublication) {
+            groupId 'com.brightcove'
+            artifactId 'logger'
+            version '1.0.0'
+            artifact("$buildDir/outputs/aar/CastCompanionLibrary-android-release.aar")
         }
     }
 }
 
 artifactoryPublish {
-    dependsOn aar
+    dependsOn assemble
 }
