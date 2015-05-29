@@ -3,9 +3,9 @@
 CastCompanionLibrary-android is a library project to enable developers integrate Cast capabilities into their applications faster and easier.
 
 ## Dependencies
-* google-play-services_lib library from the Android SDK (at least version 7.0+)
+* google-play-services_lib library from the Android SDK (at least version 7.5+)
 * android-support-v7-appcompat (version 21 or above)
-* android-support-v7-mediarouter (version 20 or above)
+* android-support-v7-mediarouter (version 21 or above)
 
 ## Setup Instructions
 * Set up the project dependencies
@@ -29,6 +29,17 @@ See LICENSE
 Google Cast Developers Community on Google+ [http://goo.gl/TPLDxj](http://goo.gl/TPLDxj)
 
 ## Change List
+
+2.1
+
+ * Added Queue related APIs for handling autoplay and queue
+ * Added "stop" button to notification and lockscreen for live streams in Lollipop and above
+ * Expanded callbacks in VideoCastConsumer interface to provide feedback on success of queue related API calls
+ * Extended the full-screen VideoCastControllerActivity to include next/previous for navigation through queues.
+  The visibility of these new buttons can be set through VideoCastManager.setNextPreviousVisibilityPolicy(policy)
+ * The MiniController now has a modified UI with an additional item for showing an upcoming media item from the queue.
+ * Addressed some issues
+
 2.0.2
 
  * Addressing issues #171, #174
