@@ -79,7 +79,7 @@ publishing {
     publications {
         ccl(MavenPublication) {
             groupId 'com.brightcove'
-            artifactId 'logger'
+            artifactId 'ccl'
             version '1.0.0'
             artifact("$buildDir/outputs/aar/CastCompanionLibrary-android-release.aar")
         }
