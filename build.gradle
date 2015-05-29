@@ -25,7 +25,7 @@ buildscript {
 }
 
 repositories {
-    mavenCentral()
+    jcenter()
     flatDir {
         dirs 'libs'
     }
@@ -57,6 +57,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:22.2.0'
     compile 'com.android.support:mediarouter-v7:22.0.0'
     compile 'com.google.android.gms:play-services-cast:7.5.0'
+    compile 'com.afollestad:material-dialogs:0.7.4.2'
 }
 
 // Variables for Artifactory publishing are stored in local gradle.properties

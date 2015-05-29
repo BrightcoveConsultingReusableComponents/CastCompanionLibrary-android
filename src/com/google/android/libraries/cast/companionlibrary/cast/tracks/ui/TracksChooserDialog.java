@@ -16,6 +16,7 @@
 
 package com.google.android.libraries.cast.companionlibrary.cast.tracks.ui;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.android.gms.cast.MediaInfo;
 import com.google.android.gms.cast.MediaTrack;
 import com.google.android.libraries.cast.companionlibrary.R;
@@ -57,42 +58,37 @@ public class TracksChooserDialog extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        //AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        MaterialDialog.Builder builder = new MaterialDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.custom_tracks_dialog_layout, null);
         setUpView(view);
 
-        builder.setView(view)
-                .setPositiveButton(getString(R.string.ccl_ok),
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int id) {
-                                List<MediaTrack> selectedTracks = new ArrayList<>();
-                                MediaTrack textTrack = mTextAdapter.getSelectedTrack();
-                                if (textTrack.getId() != TEXT_TRACK_NONE_ID) {
-                                    selectedTracks.add(textTrack);
-                                }
-                                MediaTrack audioVideoTrack = mAudioVideoAdapter.getSelectedTrack();
-                                if (audioVideoTrack != null) {
-                                    selectedTracks.add(audioVideoTrack);
-                                }
-                                mCastManager.notifyTracksSelectedListeners(selectedTracks);
-                                TracksChooserDialog.this.getDialog().cancel();
-                            }
-                        })
-                .setNegativeButton(R.string.ccl_cancel, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        TracksChooserDialog.this.getDialog().cancel();
+        builder.title(R.string.ccl_caption_subtitles)
+                .customView(view, false)
+                .positiveText(getString(R.string.ccl_ok))
+                .callback(new MaterialDialog.ButtonCallback() {
+                    @Override
+                    public void onPositive(MaterialDialog dialog) {
+                        super.onPositive(dialog);
+                        List<MediaTrack> selectedTracks = new ArrayList<>();
+                        MediaTrack textTrack = mTextAdapter.getSelectedTrack();
+                        if (textTrack.getId() != TEXT_TRACK_NONE_ID) {
+                            selectedTracks.add(textTrack);
+                        }
+                        mCastManager.notifyTracksSelectedListeners(selectedTracks);
+                        dismiss();
+                    }
+
+                    @Override
+                    public void onNegative(MaterialDialog dialog) {
+                        super.onNegative(dialog);
+                        dismiss();
                     }
                 })
-                .setOnCancelListener(new DialogInterface.OnCancelListener() {
-                    @Override
-                    public void onCancel(DialogInterface dialog) {
-                        TracksChooserDialog.this.getDialog().cancel();
-                    }
-                });
+                .negativeText(R.string.ccl_cancel);
 
-        return builder.create();
+        return builder.build();
     }
 
     @Override
@@ -123,46 +119,13 @@ public class TracksChooserDialog extends DialogFragment {
     }
 
     private void setUpView(View view) {
-        ListView listView1 = (ListView) view.findViewById(R.id.listview1);
-        ListView listView2 = (ListView) view.findViewById(R.id.listview2);
-        TextView textEmptyMessageView = (TextView) view.findViewById(R.id.text_empty_message);
-        TextView audioEmptyMessageView = (TextView) view.findViewById(R.id.audio_empty_message);
+        ListView listView = (ListView) view.findViewById(R.id.listview);
         partitionTracks();
 
         mTextAdapter = new TracksListAdapter(getActivity(), R.layout.tracks_row_layout,
                 mTextTracks, mSelectedTextPosition);
-        mAudioVideoAdapter = new TracksListAdapter(getActivity(), R.layout.tracks_row_layout,
-                mAudioTracks, mSelectedAudioPosition);
 
-        listView1.setAdapter(mTextAdapter);
-        listView2.setAdapter(mAudioVideoAdapter);
-
-        TabHost tabs = (TabHost) view.findViewById(R.id.tabhost);
-        tabs.setup();
-
-        // create tab 1
-        TabHost.TabSpec tab1 = tabs.newTabSpec("tab1");
-        if (mTextTracks == null || mTextTracks.isEmpty()) {
-            listView1.setVisibility(View.INVISIBLE);
-            tab1.setContent(R.id.text_empty_message);
-        } else {
-            textEmptyMessageView.setVisibility(View.INVISIBLE);
-            tab1.setContent(R.id.listview1);
-        }
-        tab1.setIndicator(getString(R.string.ccl_caption_subtitles));
-        tabs.addTab(tab1);
-
-        // create tab 2
-        TabHost.TabSpec tab2 = tabs.newTabSpec("tab2");
-        if (mAudioTracks == null || mAudioTracks.isEmpty()) {
-            listView2.setVisibility(View.INVISIBLE);
-            tab2.setContent(R.id.audio_empty_message);
-        } else {
-            audioEmptyMessageView.setVisibility(View.INVISIBLE);
-            tab2.setContent(R.id.listview2);
-        }
-        tab2.setIndicator(getString(R.string.ccl_caption_audio));
-        tabs.addTab(tab2);
+        listView.setAdapter(mTextAdapter);
     }
 
     private MediaTrack buildNoneTrack() {

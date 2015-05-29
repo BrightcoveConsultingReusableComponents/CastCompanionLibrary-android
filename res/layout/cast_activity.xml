@@ -146,6 +146,7 @@
                     android:layout_gravity="center"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
+                    android:progressDrawable="@drawable/seekbar_drawable"
                     android:layout_toLeftOf="@+id/end_text"
                     android:layout_toRightOf="@+id/start_text" />
 
