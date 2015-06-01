@@ -335,7 +335,8 @@ public class VideoCastControllerActivity extends ActionBarActivity implements
     public void onQueueItemsUpdated(int queueLength, int position) {
         boolean prevAvailable = position > 0 ;
         boolean nextAvailable = position < queueLength - 1;
-        switch(mNextPreviousVisibilityPolicy) {
+        // TODO: if we want to use the next/prev buttons, uncomment this.
+        /*switch(mNextPreviousVisibilityPolicy) {
             case VideoCastController.NEXT_PREV_VISIBILITY_POLICY_HIDDEN:
                 if (nextAvailable) {
                     mSkipNext.setVisibility(View.VISIBLE);
@@ -374,7 +375,7 @@ public class VideoCastControllerActivity extends ActionBarActivity implements
                 break;
             default:
                 LOGE(TAG, "onQueueItemsUpdated(): Invalid NextPreviousPolicy has been set");
-        }
+        }*/
     }
 
     @Override
