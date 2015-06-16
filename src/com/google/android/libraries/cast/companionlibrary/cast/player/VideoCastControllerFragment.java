@@ -111,7 +111,6 @@ public class VideoCastControllerFragment extends Fragment implements
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        setImmersive();
         mCastConsumer = new MyCastConsumer();
         Bundle bundle = getArguments();
         if (bundle == null) {
@@ -119,6 +118,10 @@ public class VideoCastControllerFragment extends Fragment implements
         }
         Bundle extras = bundle.getBundle(EXTRAS);
         Bundle mediaWrapper = extras.getBundle(VideoCastManager.EXTRA_MEDIA);
+
+        // Set immersive mode
+        if (extras.getBoolean(VideoCastManager.EXTRA_IMMERSIVE_MODE, false))
+            setImmersive();
 
         // Retain this fragment across configuration changes.
         setRetainInstance(true);
