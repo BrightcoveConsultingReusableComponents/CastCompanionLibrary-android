@@ -44,6 +44,11 @@ public interface BaseCastConsumer extends OnFailedListener {
     void onConnectionSuspended(int cause);
 
     /**
+     * Called right before a device is disconnected
+     */
+    void onPreDisconnect();
+
+    /**
      * Called when a device is disconnected
      */
     void onDisconnected();

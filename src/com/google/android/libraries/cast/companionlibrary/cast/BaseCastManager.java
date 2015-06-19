@@ -240,6 +240,7 @@ public abstract class BaseCastManager
         if (mSelectedCastDevice == null) {
             return;
         }
+        onPreDisconnect();
         mSelectedCastDevice = null;
         mDeviceName = null;
         LOGD(TAG, "mConnectionSuspended: " + mConnectionSuspended);
@@ -889,6 +890,11 @@ public abstract class BaseCastManager
 
     }
 
+    protected void onPreDisconnect() {
+        for (BaseCastConsumer consumer : mBaseCastConsumers) {
+            consumer.onPreDisconnect();
+        }
+    }
     /*
      * Note: this is not called by the SDK anymore but this library calls this in the appropriate
      * time.
