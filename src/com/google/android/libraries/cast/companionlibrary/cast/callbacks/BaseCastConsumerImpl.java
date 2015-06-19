@@ -31,6 +31,10 @@ public class BaseCastConsumerImpl implements BaseCastConsumer {
     }
 
     @Override
+    public void onPreDisconnect() {
+    }
+
+    @Override
     public void onDisconnected() {
     }
 
