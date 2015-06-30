@@ -147,6 +147,7 @@ public class VideoCastManager extends BaseCastManager
     public static final String EXTRA_NEXT_PREVIOUS_VISIBILITY_POLICY = "nextPrevPolicy";
     public static final String EXTRA_CUSTOM_DATA = "customData";
     public static final String EXTRA_IMMERSIVE_MODE = "immersiveMode";
+    public static final String EXTRA_DEFAULT_CAPTION_TRACK = "defaultCaptionTrack";
     public static final double DEFAULT_VOLUME_STEP = 0.05;
     private static final long PROGRESS_UPDATE_INTERVAL_MS = TimeUnit.SECONDS.toMillis(1);
     private double mVolumeStep = DEFAULT_VOLUME_STEP;
@@ -426,12 +427,32 @@ public class VideoCastManager extends BaseCastManager
      */
     public void startVideoCastControllerActivity(Context context, Bundle mediaWrapper, int position,
              boolean shouldStart, boolean immersiveMode, JSONObject customData) {
+        startVideoCastControllerActivity(context, mediaWrapper, position, shouldStart, immersiveMode, -1,
+                customData);
+    }
+
+    /**
+     * Launches the {@link VideoCastControllerActivity} that provides a default Cast Player page.
+     * @param context The context to use for starting the activity
+     * @param mediaWrapper a bundle wrapper for the media that is or will be casted
+     * @param position Starting point, in milliseconds,  of the media playback
+     * @param shouldStart indicates if the remote playback should start after launching the new page
+     * @param immersiveMode indicates if the player page should be launched in immersive mode.
+     * @param defaultCaptionTrack The ID of a caption track that should be set by default.  Ignored if set to -1.
+     * @param customData Optional {@link JSONObject}
+     */
+    public void startVideoCastControllerActivity(Context context, Bundle mediaWrapper, int position,
+                                                 boolean shouldStart, boolean immersiveMode, long defaultCaptionTrack,
+                                                 JSONObject customData) {
         Intent intent = new Intent(context, VideoCastControllerActivity.class);
         intent.putExtra(EXTRA_MEDIA, mediaWrapper);
         intent.putExtra(EXTRA_START_POINT, position);
         intent.putExtra(EXTRA_SHOULD_START, shouldStart);
         intent.putExtra(EXTRA_NEXT_PREVIOUS_VISIBILITY_POLICY, mNextPreviousVisibilityPolicy);
         intent.putExtra(EXTRA_IMMERSIVE_MODE, immersiveMode);
+        if (defaultCaptionTrack != -1) {
+            intent.putExtra(EXTRA_DEFAULT_CAPTION_TRACK, defaultCaptionTrack);
+        }
         if (customData != null) {
             intent.putExtra(EXTRA_CUSTOM_DATA, customData.toString());
         }
