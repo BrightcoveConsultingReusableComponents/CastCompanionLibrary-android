@@ -25,6 +25,7 @@ import com.google.android.gms.cast.MediaQueueItem;
 import com.google.android.gms.cast.MediaStatus;
 import com.google.android.gms.cast.MediaTrack;
 import com.google.android.gms.cast.RemoteMediaPlayer;
+import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.libraries.cast.companionlibrary.R;
 import com.google.android.libraries.cast.companionlibrary.cast.MediaQueue;
 import com.google.android.libraries.cast.companionlibrary.cast.VideoCastManager;
@@ -94,6 +95,7 @@ public class VideoCastControllerFragment extends Fragment implements
     private static boolean sDialogCanceled = false;
     private boolean mIsFresh = true;
     private MediaStatus mMediaStatus;
+    private long mDefaultCaptionTrack;
 
     private enum OverallState {
         AUTHORIZING, PLAYBACK, UNKNOWN
@@ -122,6 +124,9 @@ public class VideoCastControllerFragment extends Fragment implements
         // Set immersive mode
         if (extras.getBoolean(VideoCastManager.EXTRA_IMMERSIVE_MODE, false))
             setImmersive();
+
+        // Store default caption track
+        mDefaultCaptionTrack = extras.getLong(VideoCastManager.EXTRA_DEFAULT_CAPTION_TRACK, -1);
 
         // Retain this fragment across configuration changes.
         setRetainInstance(true);
@@ -285,6 +290,26 @@ public class VideoCastControllerFragment extends Fragment implements
             mCastController.updateControllersStatus(true);
         }
 
+        @Override
+        public void onMediaLoadResult(int statusCode) {
+            // Set default caption track, if enabled
+            if (CommonStatusCodes.SUCCESS == statusCode && mDefaultCaptionTrack != -1) {
+                LOGD(TAG, "Requested default caption track: " + mDefaultCaptionTrack);
+                // Verify the track ID exists
+                if (mCastManager.isFeatureEnabled(VideoCastManager.FEATURE_CAPTIONS_PREFERENCE)
+                        && mSelectedMedia != null) {
+                    List<MediaTrack> tracks = mSelectedMedia.getMediaTracks();
+                    for (MediaTrack track : tracks) {
+                        if (track != null && track.getId() == mDefaultCaptionTrack) {
+                            // Track exists, set it as the default caption track
+                            LOGD(TAG, "Found the actual track, setting it to be active");
+                            mCastManager.setActiveTrackIds(new long[]{mDefaultCaptionTrack});
+                            break;
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private class UpdateSeekbarTask extends TimerTask {
