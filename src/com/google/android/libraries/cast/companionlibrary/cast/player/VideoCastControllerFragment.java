@@ -821,10 +821,10 @@ public class VideoCastControllerFragment extends Fragment implements
             }
         }
         mCastManager.setActiveTrackIds(tracksArray);
-        if (tracks.size() > 0) {
+        /*if (tracks.size() > 0) {
             mCastManager.setTextTrackStyle(mCastManager.getTracksPreferenceManager()
                     .getTextTrackStyle());
-        }
+        }*/
     }
 
     /*
