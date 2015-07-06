@@ -45,7 +45,7 @@
         android:padding="8dp"
         android:layout_marginRight="8dp"
         android:src="@drawable/ic_av_pause_sm_dark"/>
-`
+
     <ProgressBar
         android:id="@+id/loading_view"
         android:layout_width="wrap_content"
