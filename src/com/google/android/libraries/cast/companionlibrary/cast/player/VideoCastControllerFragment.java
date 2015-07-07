@@ -821,7 +821,8 @@ public class VideoCastControllerFragment extends Fragment implements
             }
         }
         mCastManager.setActiveTrackIds(tracksArray);
-        /*if (tracks.size() > 0) {
+        /* This is comented out because the CCL was interfering with our own styling logic.
+        if (tracks.size() > 0) {
             mCastManager.setTextTrackStyle(mCastManager.getTracksPreferenceManager()
                     .getTextTrackStyle());
         }*/
