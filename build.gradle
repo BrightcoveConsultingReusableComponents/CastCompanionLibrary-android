@@ -81,7 +81,7 @@ publishing {
         ccl(MavenPublication) {
             groupId 'com.brightcove'
             artifactId 'ccl'
-            version '1.0.8'
+            version '1.0.9'
             artifact("$buildDir/outputs/aar/BARC-CCL-JOB1-release.aar")
         }
     }
