@@ -2697,6 +2697,8 @@ public class VideoCastManager extends BaseCastManager
      * Signals a change in the Text Track style. Clients should not call this directly.
      */
     public void onTextTrackStyleChanged(TextTrackStyle style) {
+        /* This is comented out because the CCL was interfering with our own styling logic.
+        
         LOGD(TAG, "onTextTrackStyleChanged() reached");
         if (mRemoteMediaPlayer == null || mRemoteMediaPlayer.getMediaInfo() == null) {
             return;
@@ -2717,7 +2719,7 @@ public class VideoCastManager extends BaseCastManager
             } catch (Exception e) {
                 LOGE(TAG, "onTextTrackStyleChanged(): Failed to inform " + consumer, e);
             }
-        }
+        }*/
     }
 
     /**
