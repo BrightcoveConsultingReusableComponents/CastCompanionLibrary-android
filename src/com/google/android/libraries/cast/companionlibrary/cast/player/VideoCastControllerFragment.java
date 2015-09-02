@@ -297,7 +297,7 @@ public class VideoCastControllerFragment extends Fragment implements
                 LOGD(TAG, "Requested default caption track: " + mDefaultCaptionTrack);
                 // Verify the track ID exists
                 if (mCastManager.isFeatureEnabled(VideoCastManager.FEATURE_CAPTIONS_PREFERENCE)
-                        && mSelectedMedia != null) {
+                        && mSelectedMedia != null && mSelectedMedia.getMediaTracks() != null) {
                     List<MediaTrack> tracks = mSelectedMedia.getMediaTracks();
                     for (MediaTrack track : tracks) {
                         if (track != null && track.getId() == mDefaultCaptionTrack) {
